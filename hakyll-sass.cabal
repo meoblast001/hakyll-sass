@@ -9,6 +9,10 @@ category: Web
 build-type: Simple
 cabal-version: >= 1.10
 
+description:
+  Hakyll compiler which indirectly uses libsass to compile SASS and SCSS to CSS.
+  The Ruby SASS compiler is not required.
+
 library
   exposed-modules: Hakyll.Web.Sass
   build-depends:
