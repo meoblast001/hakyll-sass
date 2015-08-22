@@ -15,6 +15,7 @@ import Hakyll.Core.Compiler
 import Hakyll.Core.Item
 import Text.Sass.Compilation
 import Text.Sass.Options
+import Prelude
 
 -- | Compiles a SASS file into CSS.
 sassCompiler :: Compiler (Item String)
