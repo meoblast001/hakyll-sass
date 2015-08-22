@@ -8,6 +8,7 @@
 
 module Hakyll.Web.Sass (sassCompiler) where
 
+import Control.Monad (join)
 import Data.Default.Class
 import Data.Functor
 import Hakyll.Core.Compiler
@@ -21,13 +22,12 @@ sassCompiler :: Compiler (Item String)
 sassCompiler = do
   bodyStr <- itemBody <$> getResourceBody
   extension <- getUnderlyingExtension
-  let mayOptions = selectFileType def extension
-  case mayOptions of
-    Just options -> do
-      resultOrErr <- unsafeCompiler (compileString bodyStr options)
+  case selectFileType def extension of
+    Just options -> join $ unsafeCompiler $ do
+      resultOrErr <- compileString bodyStr options
       case resultOrErr of
-        Left sassError -> fail (unsafePerformIO $ errorMessage sassError)
-        Right result -> makeItem result
+        Left sassError -> errorMessage sassError >>= fail
+        Right result -> return (makeItem result)
     Nothing -> fail "File type must be .scss or .sass."
 
 -- | Use the file extension to determine whether to use indented syntax.
