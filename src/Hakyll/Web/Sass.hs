@@ -13,7 +13,6 @@ import Data.Default.Class
 import Data.Functor
 import Hakyll.Core.Compiler
 import Hakyll.Core.Item
-import System.IO.Unsafe
 import Text.Sass.Compilation
 import Text.Sass.Options
 
