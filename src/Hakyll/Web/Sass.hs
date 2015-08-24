@@ -8,7 +8,10 @@
 
 module Hakyll.Web.Sass
 ( sassCompiler
+, sassCompilerWith
 , renderSass
+, renderSassWith
+, selectFileType
 ) where
 
 import Control.Monad (join)
@@ -21,22 +24,35 @@ import System.FilePath (takeExtension)
 import Text.Sass.Compilation
 import Text.Sass.Options
 
--- | Compiles a SASS file into CSS.
+-- | Compiles a SASS file into CSS. Use the file extension to determine SCSS
+-- from SASS formatting.
 sassCompiler :: Compiler (Item String)
 sassCompiler = getResourceBody >>= renderSass
 
--- | Compiles a SASS file item into CSS.
+-- | Compiles a SASS file into CSS with options. The file extension will not
+-- be used to determine SCSS from SASS formatting.
+sassCompilerWith :: SassOptions -> Compiler (Item String)
+sassCompilerWith options = getResourceBody >>= renderSassWith options
+
+-- | Compiles a SASS file item into CSS. Use the file extension to determine
+-- SCSS from SASS formatting.
 renderSass :: Item String -> Compiler (Item String)
 renderSass item =
-  let bodyStr = itemBody item
-      extension = (takeExtension . toFilePath . itemIdentifier) item
+  let extension = (takeExtension . toFilePath . itemIdentifier) item
   in case selectFileType def extension of
-    Just options -> join $ unsafeCompiler $ do
-      resultOrErr <- compileString bodyStr options
-      case resultOrErr of
-        Left sassError -> errorMessage sassError >>= fail
-        Right result -> return (makeItem result)
-    Nothing -> fail "File type must be .scss or .sass."
+       Just options -> renderSassWith options item
+       Nothing -> fail "File type must be .scss or .sass."
+
+-- | Compiles a SASS file item into CSS with options. The file extension will
+-- not be used to determine SCSS from SASS formatting.
+renderSassWith :: SassOptions -> Item String -> Compiler (Item String)
+renderSassWith options item =
+  let bodyStr = itemBody item
+  in join $ unsafeCompiler $ do
+    resultOrErr <- compileString bodyStr options
+    case resultOrErr of
+      Left sassError -> errorMessage sassError >>= fail
+      Right result -> return (makeItem result)
 
 -- | Use the file extension to determine whether to use indented syntax.
 selectFileType :: SassOptions -> String -> Maybe SassOptions
