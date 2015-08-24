@@ -6,22 +6,31 @@
 -- Stability: experimental
 -- Portability: ghc
 
-module Hakyll.Web.Sass (sassCompiler) where
+module Hakyll.Web.Sass
+( sassCompiler
+, renderSass
+) where
 
 import Control.Monad (join)
 import Data.Default.Class
 import Data.Functor
 import Hakyll.Core.Compiler
+import Hakyll.Core.Identifier
 import Hakyll.Core.Item
+import System.FilePath (takeExtension)
 import Text.Sass.Compilation
 import Text.Sass.Options
 
 -- | Compiles a SASS file into CSS.
 sassCompiler :: Compiler (Item String)
-sassCompiler = do
-  bodyStr <- itemBody <$> getResourceBody
-  extension <- getUnderlyingExtension
-  case selectFileType def extension of
+sassCompiler = getResourceBody >>= renderSass
+
+-- | Compiles a SASS file item into CSS.
+renderSass :: Item String -> Compiler (Item String)
+renderSass item =
+  let bodyStr = itemBody item
+      extension = (takeExtension . toFilePath . itemIdentifier) item
+  in case selectFileType def extension of
     Just options -> join $ unsafeCompiler $ do
       resultOrErr <- compileString bodyStr options
       case resultOrErr of
