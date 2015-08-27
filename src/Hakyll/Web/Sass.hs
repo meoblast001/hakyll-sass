@@ -12,6 +12,8 @@ module Hakyll.Web.Sass
 , renderSass
 , renderSassWith
 , selectFileType
+, sassDefConfig
+, module Text.Sass.Options
 ) where
 
 import Control.Monad (join)
@@ -39,7 +41,7 @@ sassCompilerWith options = getResourceBody >>= renderSassWith options
 renderSass :: Item String -> Compiler (Item String)
 renderSass item =
   let extension = (takeExtension . toFilePath . itemIdentifier) item
-  in case selectFileType def extension of
+  in case selectFileType sassDefConfig extension of
        Just options -> renderSassWith options item
        Nothing -> fail "File type must be .scss or .sass."
 
@@ -59,3 +61,7 @@ selectFileType :: SassOptions -> String -> Maybe SassOptions
 selectFileType options ".scss" = Just $ options { sassIsIndentedSyntax = False }
 selectFileType options ".sass" = Just $ options { sassIsIndentedSyntax = True }
 selectFileType _ _ = Nothing
+
+-- | Default sass configuration.
+sassDefConfig :: SassOptions
+sassDefConfig = def
