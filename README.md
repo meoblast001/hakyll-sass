@@ -11,6 +11,7 @@ To install, run the following command:
 To use in a Hakyll project, do something similar to the following:
 
     -- css/default.sass
+
     *
         box-sizing: border-box
 
