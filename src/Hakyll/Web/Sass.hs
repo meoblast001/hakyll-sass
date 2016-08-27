@@ -25,6 +25,7 @@ import Hakyll.Core.Item
 import System.FilePath (takeExtension)
 import Text.Sass.Compilation
 import Text.Sass.Options
+import Prelude
 
 -- | Compiles a SASS file into CSS. Use the file extension to determine SCSS
 -- from SASS formatting.
