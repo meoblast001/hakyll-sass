@@ -7,3 +7,6 @@ Hackage under [hakyll-sass](https://hackage.haskell.org/package/hakyll-sass).
 To install, run the following command:
 
     cabal install hakyll-sass
+
+#### Build Status
+[![Build Status](https://travis-ci.org/meoblast001/hakyll-sass.svg?branch=master)](https://travis-ci.org/meoblast001/hakyll-sass)
