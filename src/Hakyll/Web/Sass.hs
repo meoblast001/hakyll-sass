@@ -18,7 +18,6 @@ module Hakyll.Web.Sass
 
 import Control.Monad (join)
 import Data.Default.Class
-import Data.Functor
 import Hakyll.Core.Compiler
 import Hakyll.Core.Identifier
 import Hakyll.Core.Item
