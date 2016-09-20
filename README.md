@@ -14,28 +14,24 @@ To install, run the following command:
 #### Usage Instructions
 To use in a Hakyll project, do something similar to the following:
 
-    -- css/default.sass
+SASS file - `css/default.sass`:
 
-    *
-        box-sizing: border-box
+    .example
+        border: solid 1px #000000
 
 
-    -- templates/default.html
+HTML file - `templates/default.html`:
 
-    -- ...
     <link rel="stylesheet" href="/css/default.css" />
-    -- ...
+    <div class="example">Example</div>
 
 
-    -- site.hs
+Haskell file - `site.hs`:
 
-    -- ...
     import Hakyll.Web.Sass (sassCompiler)
-    -- ...
 
     main = hakyll $ do
         match "css/*.sass" $ do
             route $ setExtension "css"
             let compressCssItem = fmap compressCss
             compile (compressCssItem <$> sassCompiler)
-        -- ...
