@@ -13,7 +13,8 @@ Tested-With: GHC == 7.10.2, GHC == 8.0.1
 
 description:
   Hakyll compiler which indirectly uses libsass to compile SASS and SCSS to CSS.
-  The Ruby SASS compiler is not required.
+  The Ruby SASS compiler is not required. For documentation, see the
+  <https://github.com/meoblast001/hakyll-sass/blob/master/README.md README>.
 
 library
   exposed-modules: Hakyll.Web.Sass
