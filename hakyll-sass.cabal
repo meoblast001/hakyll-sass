@@ -1,5 +1,5 @@
 name: hakyll-sass
-version: 0.2.0
+version: 0.2.1
 synopsis: Hakyll SASS compiler over hsass
 license: MIT
 license-file: LICENSE
