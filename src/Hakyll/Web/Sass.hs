@@ -49,9 +49,9 @@ renderSass item =
 -- not be used to determine SCSS from SASS formatting.
 renderSassWith :: SassOptions -> Item String -> Compiler (Item String)
 renderSassWith options item =
-  let bodyStr = itemBody item
+  let filePath = toFilePath $ itemIdentifier item
   in join $ unsafeCompiler $ do
-    resultOrErr <- compileString bodyStr options
+    resultOrErr <- compileFile filePath options
     case resultOrErr of
       Left sassError -> errorMessage sassError >>= fail
       Right result -> return (makeItem result)
