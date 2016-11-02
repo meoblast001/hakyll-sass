@@ -9,7 +9,8 @@ To install, run the following command:
     cabal install hakyll-sass
 
 #### Build Status
-[![Build Status](https://travis-ci.org/meoblast001/hakyll-sass.svg?branch=master)](https://travis-ci.org/meoblast001/hakyll-sass)
+Master: [![Build Status](https://travis-ci.org/meoblast001/hakyll-sass.svg?branch=master)](https://travis-ci.org/meoblast001/hakyll-sass)
+Develop: [![Build Status](https://travis-ci.org/meoblast001/hakyll-sass.svg?branch=develop)](https://travis-ci.org/meoblast001/hakyll-sass)
 
 #### Usage Instructions
 To use in a Hakyll project, do something similar to the following:
