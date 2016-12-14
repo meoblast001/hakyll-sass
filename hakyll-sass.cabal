@@ -20,7 +20,7 @@ library
   exposed-modules: Hakyll.Web.Sass
   build-depends:
       base >= 4.7 && < 5
-    , aeson-pretty < 0.8
+    , aeson-pretty >= 0.8
     , hakyll >= 4.7.0
     , data-default-class >= 0.0.1
     , hsass >= 0.2.0
