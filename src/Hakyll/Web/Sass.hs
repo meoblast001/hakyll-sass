@@ -20,7 +20,9 @@ import Control.Monad (join)
 import Data.Default.Class
 import Hakyll.Core.Compiler
 import Hakyll.Core.Identifier
+import Hakyll.Core.Compiler.Internal
 import Hakyll.Core.Item
+import Hakyll.Core.Provider
 import System.FilePath (takeExtension)
 import Text.Sass.Compilation
 import Text.Sass.Options
@@ -48,9 +50,10 @@ renderSass item =
 -- | Compiles a SASS file item into CSS with options. The file extension will
 -- not be used to determine SCSS from SASS formatting.
 renderSassWith :: SassOptions -> Item String -> Compiler (Item String)
-renderSassWith options item =
-  let filePath = toFilePath $ itemIdentifier item
-  in join $ unsafeCompiler $ do
+renderSassWith options item = join $ do
+  provider <- compilerProvider <$> compilerAsk
+  let filePath = resourceFilePath provider (itemIdentifier item)
+  unsafeCompiler $ do
     resultOrErr <- compileFile filePath options
     case resultOrErr of
       Left sassError -> errorMessage sassError >>= fail
