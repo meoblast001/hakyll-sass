@@ -1,0 +1,50 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+    tags-ignore:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+  schedule:
+    - cron: "00 15 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        ghc: ["8.6.5"]
+        cabal: ["3.0"]
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-haskell@v1
+      with:
+        ghc-version: ${{ matrix.ghc }}
+        cabal-version: ${{ matrix.cabal }}
+
+    - name: Display ghc & cabal version
+      run: |
+        ghc -V
+        cabal -V
+
+    - name: Cache ~/.cabal/store
+      uses: actions/cache@v1.0.3
+      with:
+        path: ~/.cabal/store
+        key: v2-cabal-${{ hashFiles('**/bigmoon-haskellers-blog.cabal') }}
+        restore-keys: |
+          v2-cabal-
+
+    - name: Install dependencies
+      run: |
+        cabal v2-update
+        cabal v2-configure --write-ghc-environment-files=always -j2
+        cabal v2-build --only-dependencies
+
+    - name: Build
+      run: cabal v2-build
