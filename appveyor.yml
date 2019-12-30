@@ -1,6 +1,8 @@
 clone_folder: "c:\\WORK"
 clone_depth: 5
 
+skip_branch_with_pr: true
+
 platform:
   - x64
 
