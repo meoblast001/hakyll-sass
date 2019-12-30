@@ -13,7 +13,8 @@ To install, run the following command:
 
 ## Build Status
 
-TODO
+![](https://github.com/waddlaw/hakyll-sass/workflows/build/badge.svg)
+[![Build status](https://ci.appveyor.com/api/projects/status/l7csolb0hch9ml2v?svg=true)](https://ci.appveyor.com/project/waddlaw/hakyll-sass)
 
 ## Usage Instructions
 
