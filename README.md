@@ -1,4 +1,5 @@
-### Hakyll SASS ###
+# Hakyll SASS
+
 A library for [Hakyll](http://jaspervdj.be/hakyll/) providing a compiler for
 [SASS](http://sass-lang.com/) using
 [hsass](http://hackage.haskell.org/package/hsass). This package can be found on
@@ -6,29 +7,36 @@ Hackage under [hakyll-sass](https://hackage.haskell.org/package/hakyll-sass).
 
 To install, run the following command:
 
+```shell
     cabal install hakyll-sass
+```
 
-#### Build Status
-Master: [![Build Status](https://travis-ci.org/meoblast001/hakyll-sass.svg?branch=master)](https://travis-ci.org/meoblast001/hakyll-sass)
-Develop: [![Build Status](https://travis-ci.org/meoblast001/hakyll-sass.svg?branch=develop)](https://travis-ci.org/meoblast001/hakyll-sass)
+## Build Status
 
-#### Usage Instructions
+![](https://github.com/waddlaw/hakyll-sass/workflows/build/badge.svg)
+[![Build status](https://ci.appveyor.com/api/projects/status/l7csolb0hch9ml2v?svg=true)](https://ci.appveyor.com/project/waddlaw/hakyll-sass)
+
+## Usage Instructions
+
 To use in a Hakyll project, do something similar to the following:
 
 SASS file - `css/default.sass`:
 
+```sass
     .example
         border: solid 1px #000000
-
+```
 
 HTML file - `templates/default.html`:
 
+```html
     <link rel="stylesheet" href="/css/default.css" />
     <div class="example">Example</div>
-
+```
 
 Haskell file - `site.hs`:
 
+```hs
     import Hakyll.Web.Sass (sassCompiler)
 
     main = hakyll $ do
@@ -36,3 +44,4 @@ Haskell file - `site.hs`:
             route $ setExtension "css"
             let compressCssItem = fmap compressCss
             compile (compressCssItem <$> sassCompiler)
+```
