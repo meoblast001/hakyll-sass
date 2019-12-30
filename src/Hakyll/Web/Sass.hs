@@ -17,7 +17,6 @@ module Hakyll.Web.Sass
 ) where
 
 import Control.Monad (join)
-import Data.Default.Class
 import Hakyll.Core.Compiler
 import Hakyll.Core.Identifier
 import Hakyll.Core.Compiler.Internal
@@ -67,4 +66,4 @@ selectFileType _ _ = Nothing
 
 -- | Default sass configuration.
 sassDefConfig :: SassOptions
-sassDefConfig = def
+sassDefConfig = defaultSassOptions
