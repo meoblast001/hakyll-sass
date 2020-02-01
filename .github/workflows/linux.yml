@@ -1,4 +1,4 @@
-name: build
+name: linux
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        ghc: ["8.6.5"]
+        ghc: ["8.6.5", "8.8.1"]
         cabal: ["3.0"]
 
     steps:
@@ -33,12 +33,10 @@ jobs:
         cabal -V
 
     - name: Cache ~/.cabal/store
-      uses: actions/cache@v1.0.3
+      uses: actions/cache@v1.1.0
       with:
         path: ~/.cabal/store
-        key: v2-cabal-${{ hashFiles('**/*.cabal') }}
-        restore-keys: |
-          v2-cabal-
+        key: v3-cabal-store
 
     - name: Install dependencies
       run: |

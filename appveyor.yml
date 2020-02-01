@@ -11,7 +11,8 @@ environment:
     CABOPTS:  --store-dir=C:\\SR --http-transport=plain-http
     CHOCOCMD: ghc --version %GHCVER%
   matrix:
-    - GHCVER: "8.6.5"
+    - GHCVER: 8.8.1
+    - GHCVER: 8.6.5
 
 cache:
   - dist-newstyle
