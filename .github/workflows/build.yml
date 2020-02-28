@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - master
-    tags-ignore:
-      - '*'
   pull_request:
     branches:
       - '*'
@@ -17,7 +15,8 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        ghc: ["8.6.5"]
+        os: [ubuntu-18.04, macos-10.15, windows-2019]
+        ghc: ["8.6.5", "8.8.2"]
         cabal: ["3.0"]
 
     steps:
@@ -33,17 +32,15 @@ jobs:
         cabal -V
 
     - name: Cache ~/.cabal/store
-      uses: actions/cache@v1.0.3
+      uses: actions/cache@v1.1.2
       with:
         path: ~/.cabal/store
-        key: v2-cabal-${{ hashFiles('**/*.cabal') }}
-        restore-keys: |
-          v2-cabal-
+        key: ${{ runner.os }}-${{ matrix.ghc }}-v1-cabal-store
 
     - name: Install dependencies
       run: |
         cabal v2-update
-        cabal v2-configure --write-ghc-environment-files=always -j2
+        cabal v2-configure --disable-optimization --write-ghc-environment-files=always -j2
         cabal v2-build --only-dependencies
 
     - name: Build
